@@ -16,14 +16,27 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 //var bColor = getRandomColor();
 //var ColorCode = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';;
-//color
+
+//add functionality here to randomize an array of reference strings
+//then randomize them and then initialize them below 
+var ArtReferences = ['./Art/o4atG1.jpg','./Art/1559255.jpg',
+  './Art/wa7v9q.jpg','./Art/Pentwater.jpg'];
+  var ShuffledArt = ShuffleArtArray(ArtReferences);
+  //var ShuffledReferences
+  //App.state.images = ShuffledArt;
  
 export default class App extends Component {
+
+  
   constructor(props) {
     super(props);
     this.state = {
       images: [
+
+        //ShuffledArt
+        
         //"https://source.unsplash.com/1024x768/?nature",
+        //maybe try adding for loop here of refrences above
         
         require('./Art/o4atG1.jpg'),
         require('./Art/1559255.jpg'),
@@ -32,21 +45,18 @@ export default class App extends Component {
       ],
       ColorHolder : '#379683'
     };
+    
+  }
+  //this doesn't do anything rn
+    ChangeColorFunction=()=>
+  {
+  var ColorCode = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+  this.setState({
+    ColorHolder : ColorCode
+
+  })
   }
 
-  ChangeColorFunction=()=>
-{
-
-var ColorCode = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
-
-this.setState({
-
-  ColorHolder : ColorCode
-
-})
-}
-
- 
   render() {
     return (
       <View style={[styles.container, { backgroundColor: this.state.ColorHolder }]}>
@@ -59,7 +69,7 @@ this.setState({
           disableOnPress={true}
           circleLoop={true}
           resizeMode={'contain'}
-          resizeMethod={'auto'}
+          resizeMethod={'resize'}
           /*
           resizeMode: Determines how to resize the image when the frame doesn't match the raw image dimensions.
           It can take cover, contain, stretch as values.
@@ -80,6 +90,22 @@ this.setState({
     );
   }
 }
+
+//this creates and returns a randomized array of references
+  //i think (untested)
+  function ShuffleArtArray(ArtArray) {
+    let curId = ArtArray.length;
+    while (0 !== curId){
+      let randId = Math.floor(Math.random() * curId);
+      curId -= 1;
+      let tmp = ArtArray[curId];
+      ArtArray[curId] = ArtArray[randId];
+      ArtArray[randId] = tmp;
+    }
+    //iterates and creates references
+    //var RefArray;
+    return ArtArray
+  }
  
 const styles = StyleSheet.create({
   container: {
@@ -87,6 +113,7 @@ const styles = StyleSheet.create({
     //backgroundColor: ColorCode
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: "column"
     
 
   },
@@ -108,6 +135,7 @@ const styles = StyleSheet.create({
 //add download button
 //check and add for zoom
 //add (i) button to open up explanation
+//add function to randomize the order
 
 
 //export default App;
