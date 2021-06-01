@@ -72,7 +72,6 @@ export default class App extends Component {
         require('./Art/IMG_20210531_0031.jpg'),
         require('./Art/IMG_20210531_0032.jpg'),
         require('./Art/IMG_20210531_0033.jpg'),
-
         require('./Art/IMG_20210601_0002.jpg'),
         require('./Art/IMG_20210601_0003.jpg'),
         require('./Art/SCAN_20210601_0001.jpg'),
@@ -123,13 +122,6 @@ export default class App extends Component {
         require('./Art/SCAN_20210601_0046.jpg'),
         require('./Art/SCAN_20210601_0047.jpg'),
 
-
-
-
-
-        
-
-        
         //require('./'),
         
         //old
