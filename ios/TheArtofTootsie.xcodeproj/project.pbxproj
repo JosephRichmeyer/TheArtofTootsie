@@ -145,7 +145,6 @@
 				8B76835FC4CDE0589F767D4D /* Pods-TheArtofTootsie-TheArtofTootsieTests.debug.xcconfig */,
 				C25700D8CCB5C51D2270F60D /* Pods-TheArtofTootsie-TheArtofTootsieTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
