@@ -8,9 +8,10 @@
 
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import { Dimensions, ImageBackground } from 'react-native';
+import { Dimensions, ImageBackground, StatusBar } from 'react-native';
  
-import { SliderBox, StatusBar } from "react-native-image-slider-box";
+import { SliderBox } from "react-native-image-slider-box";
+//IMPORTANT ^^^ ABOVE USED TO HAVE STATUSBAR THIS COULD FUCK SHIT UP
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -32,9 +33,9 @@ const BGimage =  require('./Art/pagerBackground.jpg');
         require('./Art/IMG_20210531_0005.jpg'),
         require('./Art/IMG_20210531_0006.jpg'),
         require('./Art/IMG_20210531_0007.jpg')];
+
  
 export default class App extends Component {
-
   
   constructor(props) {
     super(props);
@@ -147,6 +148,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={[styles.container, { backgroundColor: this.state.ColorHolder }]}>
+      <StatusBar hidden={true} />
       <ImageBackground source={BGimage} style={styles.appStyleforBG}>
        <ScrollView>
        <Text style={styles.titleText}>The Art of Tootsie</Text>
@@ -154,6 +156,7 @@ export default class App extends Component {
         <SliderBox
           images={this.state.images}
           sliderBoxHeight={windowHeight - (styles.titleText.height + styles.titleText.marginTop) } //fix this problem
+          //sliderBoxHeight={windowHeight}
           disableOnPress={true}
           circleLoop={true}
           resizeMode={'contain'}
@@ -228,7 +231,7 @@ const styles = StyleSheet.create({
   //this is for the attempt at adding a background image
   appStyleforBG: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: "stretch", //originally 'cover'
     justifyContent: "center"
   }
   
