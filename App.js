@@ -7,8 +7,8 @@
  */
 
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import { Dimensions, ImageBackground, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Alert } from "react-native";
+import { Dimensions, ImageBackground, StatusBar, Button } from 'react-native';
  
 import { SliderBox } from "react-native-image-slider-box";
 //IMPORTANT ^^^ ABOVE USED TO HAVE STATUSBAR THIS COULD FUCK SHIT UP
@@ -17,22 +17,90 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 //this is the background image constant
 const BGimage =  require('./Art/pagerBackground.jpg');
-//var bColor = getRandomColor();
-//var ColorCode = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';;
 
-//add functionality here to randomize an array of reference strings
-//then randomize them and then initialize them below 
-//var ArtReferences = ['./Art/o4atG1.jpg','./Art/1559255.jpg',
-  //'./Art/wa7v9q.jpg','./Art/Pentwater.jpg'];
-  //var ShuffledArt = ShuffleArtArray(ArtReferences);
-  //var ShuffledReferences
-  //App.state.images = ShuffledArt;
+const ArtistMessage = "After years of creating hidden masterpieces, the artist.";
 
-  //for new attempt at the array fill
-  const IMGArray = [require('./Art/IMG_20210531_0004.jpg'),
-        require('./Art/IMG_20210531_0005.jpg'),
-        require('./Art/IMG_20210531_0006.jpg'),
-        require('./Art/IMG_20210531_0007.jpg')];
+var ImageIndex = 0; //this holds the image index and is updated on image switch
+//use this 
+
+  //This holds the same array as the images, and allows download 
+  const IMGArray = ['./Art/IMG_20210531_0004.jpg',
+        './Art/IMG_20210531_0005.jpg',
+        './Art/IMG_20210531_0006.jpg',
+        './Art/IMG_20210531_0007.jpg',
+        './Art/IMG_20210531_0009.jpg',
+        './Art/IMG_20210531_0010.jpg',
+        './Art/IMG_20210531_0011.jpg',
+        './Art/IMG_20210531_0012.jpg',
+        './Art/IMG_20210531_0013.jpg',
+        './Art/IMG_20210531_0014.jpg',
+        './Art/IMG_20210531_0015.jpg',
+        './Art/IMG_20210531_0016.jpg',
+        './Art/IMG_20210531_0017.jpg',
+        './Art/IMG_20210531_0018.jpg',
+        './Art/IMG_20210531_0019.jpg',
+        './Art/IMG_20210531_0020.jpg',
+        './Art/IMG_20210531_0021.jpg',
+        './Art/IMG_20210531_0023.jpg',
+        './Art/IMG_20210531_0024.jpg',
+        './Art/IMG_20210531_0025.jpg',
+        './Art/IMG_20210531_0026.jpg',
+        './Art/IMG_20210531_0027.jpg',
+        './Art/IMG_20210531_0028.jpg',
+        './Art/IMG_20210531_0029.jpg',
+        './Art/IMG_20210531_0030.jpg',
+        './Art/IMG_20210531_0031.jpg',
+        './Art/IMG_20210531_0032.jpg',
+        './Art/IMG_20210531_0033.jpg',
+        './Art/IMG_20210601_0002.jpg',
+        './Art/IMG_20210601_0003.jpg',
+        './Art/SCAN_20210601_0001.jpg',
+        './Art/SCAN_20210601_0002.jpg',
+        './Art/SCAN_20210601_0003.jpg',
+        './Art/SCAN_20210601_0004.jpg',
+        './Art/SCAN_20210601_0005.jpg',
+        './Art/SCAN_20210601_0006.jpg',
+        './Art/SCAN_20210601_0007.jpg',
+        './Art/SCAN_20210601_0008.jpg',
+        './Art/SCAN_20210601_0009.jpg',
+        './Art/SCAN_20210601_0010.jpg',
+        './Art/SCAN_20210601_0011.jpg',
+        './Art/SCAN_20210601_0012.jpg',
+        './Art/SCAN_20210601_0013.jpg',
+        './Art/SCAN_20210601_0014.jpg',
+        './Art/SCAN_20210601_0015.jpg',
+        './Art/SCAN_20210601_0016.jpg',
+        './Art/SCAN_20210601_0017.jpg',
+        './Art/SCAN_20210601_0018.jpg',
+        './Art/SCAN_20210601_0019.jpg',
+        './Art/SCAN_20210601_0020.jpg',
+        './Art/SCAN_20210601_0021.jpg',
+        './Art/SCAN_20210601_0022.jpg',
+        './Art/SCAN_20210601_0023.jpg',
+        './Art/SCAN_20210601_0024.jpg',
+        './Art/SCAN_20210601_0025.jpg',
+        './Art/SCAN_20210601_0026.jpg',
+        './Art/SCAN_20210601_0027.jpg',
+        './Art/SCAN_20210601_0028.jpg',
+        './Art/SCAN_20210601_0029.jpg',
+        './Art/SCAN_20210601_0030.jpg',
+        './Art/SCAN_20210601_0031.jpg',
+        './Art/SCAN_20210601_0032.jpg',
+        './Art/SCAN_20210601_0033.jpg',
+        './Art/SCAN_20210601_0034.jpg',
+        './Art/SCAN_20210601_0035.jpg',
+        './Art/SCAN_20210601_0036.jpg',
+        './Art/SCAN_20210601_0037.jpg',
+        './Art/SCAN_20210601_0038.jpg',
+        './Art/SCAN_20210601_0039.jpg',
+        './Art/SCAN_20210601_0040.jpg',
+        './Art/SCAN_20210601_0041.jpg',
+        './Art/SCAN_20210601_0042.jpg',
+        './Art/SCAN_20210601_0043.jpg',
+        './Art/SCAN_20210601_0044.jpg',
+        './Art/SCAN_20210601_0045.jpg',
+        './Art/SCAN_20210601_0046.jpg',
+        './Art/SCAN_20210601_0047.jpg'];
 
  
 export default class App extends Component {
@@ -152,15 +220,32 @@ export default class App extends Component {
       <ImageBackground source={BGimage} style={styles.appStyleforBG}>
        <ScrollView>
        <Text style={styles.titleText}>The Art of Tootsie</Text>
-       
+       <View style={styles.spaceBelowText}/>
+       <View style={styles.buttonLargeContainer}> 
+
+          <View style={styles.buttonSmallContainer}>
+            <Button
+            title="The Artist"
+            onPress={() => Alert.alert('The Artist' , ArtistMessage)}
+            color='white'/>
+          </View>
+          <View style={styles.spaceBetweenButtons}/>
+          <View style={styles.buttonSmallContainer}>
+            <Button title="Download Image"
+            color='white'/>
+          </View>
+        <View style={styles.spaceBelowButtons}/>
+        </View>
         <SliderBox
           images={this.state.images}
-          sliderBoxHeight={windowHeight - (styles.titleText.height + styles.titleText.marginTop) } //fix this problem
+          sliderBoxHeight={windowHeight - (styles.titleText.height + styles.titleText.marginTop + 50) } //fix this problem
           //sliderBoxHeight={windowHeight}
           disableOnPress={true}
+          flexGrow={1}
           circleLoop={true}
           resizeMode={'contain'}
           resizeMethod={'resize'}
+          currentImageEmitter={index => ImageIndex = index}
           dotStyle={{
             width: 0,
             height: 0,
@@ -211,8 +296,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     //backgroundColor: ColorCode
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-end', //originally center
+    alignItems: 'flex-start', //originally center
     flexDirection: "column",
     
   },
@@ -220,7 +305,7 @@ const styles = StyleSheet.create({
     flex: .1,
     textAlign: 'center',
     marginTop: 40, //can add this to the total height of the image subtraction
-    height: 45,
+    height: 40,
     fontWeight: "bold",
     fontSize: 30,
     color: '#FFFFFF',
@@ -233,6 +318,29 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "stretch", //originally 'cover'
     justifyContent: "center"
+  },
+  buttonLargeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',//used to be center
+    //margin:20,
+    //padding: 20
+  },
+  buttonSmallContainer: {
+    flex: .5,
+    backgroundColor: '#1b8ed1',
+    borderWidth: 1,
+    borderRadius: 15
+  },
+  spaceBetweenButtons: {
+    width: 20
+  },
+  spaceBelowText: {
+    height: 15
+  },
+  spaceBelowButtons: {
+    height: 10
   }
   
 });
