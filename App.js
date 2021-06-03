@@ -9,7 +9,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image, ScrollView, Alert } from "react-native";
 import { Dimensions, ImageBackground, StatusBar, Button } from 'react-native';
-import { PermissionsAndroid, Platform } from "react-native";
+import { PermissionsAndroid, Platform, TouchableOpacity } from "react-native";
 import CameraRoll from "@react-native-community/cameraroll"; //for image saving
 //https://github.com/react-native-cameraroll/react-native-cameraroll
 import { SliderBox } from "react-native-image-slider-box";
@@ -19,7 +19,9 @@ const windowHeight = Dimensions.get('window').height;
 //this is the background image constant
 const BGimage =  require('./Art/pagerBackground.jpg');
 
-const ArtistMessage = "After years of creating hidden masterpieces, the artist.";
+const ArtistMessage = "After years of creating masterpieces, the artist, Tootsie, has revealed her art to the world."
++" This art compilation, completed over several decades, has now been released for public viewing. \n" 
++ "Legal Note: Ownership of the coloring templates are the property of their respective owners. No ownership is claimed or implied.";
 
 var ImageIndex = 0; //this holds the image index and is updated on image switch
 //use this 
@@ -223,14 +225,13 @@ export default class App extends Component {
        <View style={styles.spaceBelowText}/>
        <View style={styles.buttonLargeContainer}> 
 
-          <View style={styles.buttonSmallContainer}>
-            <Button
-            title="About The Artist"
-            raised={true}
+          <TouchableOpacity style={styles.buttonSmallContainer}
             onPress={() => Alert.alert('About The Artist' , ArtistMessage)} //ArtistMessage
-            //color='white'
-            /> 
-          </View>
+            >
+            <Text style={styles.buttonText}>About the Artist</Text>
+            </TouchableOpacity>
+      
+          
           <View style={styles.spaceBetweenButtons}/>
 
         <View style={styles.spaceBelowButtons}/>
@@ -352,11 +353,20 @@ const styles = StyleSheet.create({
   },
   buttonSmallContainer: {
     flex: .5,
-    backgroundColor: 'white', //edit this
+    //backgroundColor: 'white', //edit this
+    backgroundColor: '#4ebfbd',
     borderWidth: 1,
     borderRadius: 15,
+    alignItems: 'center',
+    padding: 10,
+    
     //color: 'white'
   },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: 'white'
+  }, 
   spaceBetweenButtons: {
     width: 20
   },
