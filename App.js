@@ -9,9 +9,10 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image, ScrollView, Alert } from "react-native";
 import { Dimensions, ImageBackground, StatusBar, Button } from 'react-native';
- 
+import { PermissionsAndroid, Platform } from "react-native";
+import CameraRoll from "@react-native-community/cameraroll"; //for image saving
+//https://github.com/react-native-cameraroll/react-native-cameraroll
 import { SliderBox } from "react-native-image-slider-box";
-//IMPORTANT ^^^ ABOVE USED TO HAVE STATUSBAR THIS COULD FUCK SHIT UP
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -110,7 +111,6 @@ export default class App extends Component {
     this.state = {
       images: [
 
-        //IMGArray.
         //WE NEED TO FIND A BETTER WAY TO ADD IMAGES HERE PROGRAMMATICALLY
 
         require('./Art/IMG_20210531_0004.jpg'),
@@ -225,15 +225,14 @@ export default class App extends Component {
 
           <View style={styles.buttonSmallContainer}>
             <Button
-            title="The Artist"
-            onPress={() => Alert.alert('The Artist' , ArtistMessage)}
-            color='white'/>
+            title="About The Artist"
+            raised={true}
+            onPress={() => Alert.alert('About The Artist' , ArtistMessage)} //ArtistMessage
+            //color='white'
+            /> 
           </View>
           <View style={styles.spaceBetweenButtons}/>
-          <View style={styles.buttonSmallContainer}>
-            <Button title="Download Image"
-            color='white'/>
-          </View>
+
         <View style={styles.spaceBelowButtons}/>
         </View>
         <SliderBox
@@ -276,6 +275,30 @@ export default class App extends Component {
   }
 }
 
+//this saves the indexed photos to the users libaries
+//asks for permission and checks permissions
+async function hasAndroidPermission() {
+  const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+
+  const hasPermission = await PermissionsAndroid.check(permission);
+  if (hasPermission) {
+    return true;
+  }
+
+  const status = await PermissionsAndroid.request(permission);
+  return status === 'granted';
+}
+
+async function savePicture() {
+  if (Platform.OS === "android" && !(await hasAndroidPermission())) {
+    return;
+  }
+  //CameraRoll.save(tag, { type, album })
+  //const imgURI = require('./Art/SCAN_20210601_0047.jpg');
+  CameraRoll.save(imageURI )
+  //CameraRoll.save(tag, { 'photo', ''})
+};
+
 //this creates and returns a randomized array of references
   //i think (untested)
   function ShuffleArtArray(ArtArray) {
@@ -307,11 +330,11 @@ const styles = StyleSheet.create({
     marginTop: 40, //can add this to the total height of the image subtraction
     height: 40,
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 35,
     color: '#FFFFFF',
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 10,
-    textShadowColor: '#E8A87C'
+    textShadowColor: 'pink'
   },
   //this is for the attempt at adding a background image
   appStyleforBG: {
@@ -329,9 +352,10 @@ const styles = StyleSheet.create({
   },
   buttonSmallContainer: {
     flex: .5,
-    backgroundColor: '#1b8ed1',
+    backgroundColor: 'white', //edit this
     borderWidth: 1,
-    borderRadius: 15
+    borderRadius: 15,
+    //color: 'white'
   },
   spaceBetweenButtons: {
     width: 20
